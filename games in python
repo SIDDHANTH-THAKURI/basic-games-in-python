@@ -1,0 +1,534 @@
+'''   
+
+       DEVELOPED BY : SIDDHANTH THAKURI
+       GMAIL : thakurisiddhanth1@gmail.com
+
+
+'''                   (:  "GAMES ARE UNDER CONSTRUCTION"  :)      
+                      (:  "GAMES ARE UNDER CONSTRUCTION"  :)
+                      (:  "GAMES ARE UNDER CONSTRUCTION"  :)
+                      (:  "GAMES ARE UNDER CONSTRUCTION"  :)
+                      (:  "GAMES ARE UNDER CONSTRUCTION"  :)
+'''
+
+import random
+from time import *
+
+
+# madlib game
+def madLib():
+    try:
+        a=input('enter some words with space: \n').split()
+        random.shuffle(a)
+        x=8
+        for i in range(1,10):
+            sleep(1)
+            print('LOADING ['+'='*i+'>'+' '*x+']',end='\r')
+            x-=1
+        sleep(1)
+        print()
+        print('New sentence: ',*a)
+    except:
+        print()
+        print('Invalid Input!')
+        print()
+        madLib()
+
+
+# number guessing game
+def guessing():
+    score=0
+    count=0
+    try:
+        mm=int(input('how many times do you want to play?:  '))
+        if mm<=0:
+            fd=0/12/0
+        while mm>0:
+            try:
+                a=int(input('guess a number between one to ten:  '))
+            except:
+                print()
+                print('Wrong Input!')
+                print()
+                continue
+            c=random.choice(list(range(1,11)))
+            sleep(1)
+            print()
+            print('you guessed it right!!!' if int(c)==int(a) else 'ohh wrong guess!!\nThe number was',c)
+            print()
+            if int(c)==int(a):
+                score+=1
+            count+=1
+            mm-=1
+        sleep(1)
+        print()
+        print('Your Total Score out of {} is {}'.format(count,score))
+        print()
+        print('Iam proud of you!!' if score>count//2 else 'Nice Try!')
+        print()
+    except:
+        print()
+        print('Invalid Input!')
+        print()
+        guessing()
+
+
+# roll a die
+def roll_a_die():
+    c=random.randint(1,6)
+    try:
+        a=int(input('lets check your luck!\nIf the die shows up a number greater than 3 then you are lucky! \ntype any number to roll a die:  '))
+        x=3
+        for i in range(1,5):
+            sleep(1)
+            print('ROLLING ['+'='*i+'>'+' '*x+']',end='\r')
+            x-=1
+        sleep(1)
+        print()
+        if c in range(1,4):
+            print()
+            print('UNLUCKY!')
+            print()
+            print('The die shows number {}'.format(c))
+            print()
+        else:
+            print()
+            print('LUCKY!!')
+            print()
+            print('The die shows number {}'.format(c))
+            print()
+    except:
+        print()
+        print("INVALID INPUT!")
+        print('Try Again')
+        print()
+        roll_a_die()
+
+
+# hangman
+def hangman():
+    def words():
+        x=['closed', 'closer', 'coffee', 'column', 'combat', 'coming', 'common', 'comply', 'copper', 'corner', 'costly', 'county', 'couple', 'course', 'covers', 'create', 'credit', 'crisis', 'custom', 'damage', 'danger', 'dealer', 'debate', 'decade', 'decide', 'defeat', 'defend', 'define', 'degree', 'demand', 'depend', 'deputy', 'desert', 'design', 'desire', 'detail', 'detect', 'device', 'differ', 'dinner', 'direct', 'doctor', 'dollar', 'domain', 'double', 'driven', 'driver', 'during', 'easily', 'eating', 'editor', 'effect', 'effort', 'eighth', 'either', 'eleven', 'emerge', 'empire', 'employ', 'enable', 'ending', 'energy', 'engage', 'engine', 'enough', 'ensure', 'entire', 'entity', 'equity', 'escape', 'estate', 'ethnic', 'exceed', 'except', 'excess', 'expand', 'expect', 'expert', 'export', 'extend', 'extent', 'fabric', 'facing', 'factor', 'failed', 'fairly', 'fallen', 'family', 'famous', 'father', 'fellow', 'female', 'figure', 'filing', 'finger', 'finish', 'fiscal', 'flight', 'flying', 'follow', 'forced', 'forest', 'forget', 'formal', 'format', 'former', 'foster', 'fought', 'fourth', 'French', 'friend', 'future', 'garden', 'gather', 'gender', 'german', 'global', 'golden', 'ground', 'growth', 'guilty', 'handed', 'handle', 'happen', 'hardly', 'headed', 'health', 'height', 'hidden', 'holder', 'honest', 'impact', 'import', 'income', 'indeed', 'injury', 'inside', 'intend', 'intent', 'invest', 'island', 'itself', 'jersey', 'joseph', 'junior', 'killed', 'labour', 'latest', 'latter', 'launch', 'lawyer', 'leader', 'league', 'leaves', 'legacy', 'length', 'lesson', 'letter', 'lights', 'likely', 'linked', 'liquid', 'listen', 'little', 'living', 'losing', 'lucent', 'luxury', 'mainly', 'making', 'manage', 'manner', 'manual', 'margin', 'marine', 'marked', 'market', 'martin', 'master', 'matter', 'mature', 'medium', 'member', 'memory', 'mental', 'merely', 'merger', 'method', 'middle', 'miller', 'mining', 'minute', 'mirror', 'mobile', 'modern', 'modest', 'module', 'moment', 'morris', 'mostly', 'mother', 'motion', 'moving', 'murder', 'museum', 'mutual', 'myself', 'narrow', 'nation', 'native', 'nature', 'nearby', 'nearly', 'nights', 'nobody', 'normal', 'notice', 'notion', 'number', 'object', 'obtain', 'office', 'offset', 'online', 'option', 'orange', 'origin', 'output', 'oxford', 'packed', 'palace', 'parent', 'partly', 'patent', 'people', 'period', 'permit', 'person', 'phrase', 'picked', 'planet', 'player', 'please', 'plenty', 'pocket', 'police', 'policy', 'prefer', 'pretty', 'prince', 'prison', 'profit', 'proper', 'proven', 'public', 'pursue', 'raised', 'random', 'rarely', 'rather', 'rating', 'reader', 'really', 'reason', 'recall', 'recent', 'record', 'reduce', 'reform', 'regard', 'regime', 'region', 'relate', 'relief', 'remain', 'remote', 'remove', 'repair', 'repeat', 'replay', 'report', 'rescue', 'resort', 'result', 'retail', 'retain', 'return', 'reveal', 'review', 'reward', 'riding', 'rising', 'robust', 'ruling', 'safety', 'salary', 'sample', 'saving', 'saying', 'scheme', 'school', 'screen', 'search', 'season', 'second', 'secret', 'sector', 'secure', 'seeing', 'select', 'seller', 'senior', 'series', 'server', 'settle', 'severe', 'should', 'signal', 'signed', 'silent', 'silver', 'simple', 'simply', 'single', 'sister', 'slight', 'smooth', 'social', 'solely', 'sought', 'source', 'soviet', 'speech', 'spirit', 'spoken', 'spread', 'spring', 'square', 'stable', 'status', 'steady', 'stolen', 'strain', 'stream', 'street', 'stress', 'strict', 'strike', 'string', 'strong', 'struck', 'studio', 'submit', 'sudden', 'suffer', 'summer', 'summit', 'supply', 'surely', 'survey', 'switch', 'symbol', 'system', 'taking', 'talent', 'target', 'taught', 'tenant', 'tender', 'tennis', 'thanks', 'theory', 'thirty', 'though', 'threat', 'thrown', 'ticket', 'timely', 'timing', 'tissue', 'toward', 'travel', 'treaty', 'trying', 'twelve', 'twenty', 'unable', 'unique', 'united', 'unless', 'unlike', 'update', 'useful', 'valley', 'varied', 'vendor', 'versus', 'victim', 'vision', 'visual', 'volume', 'walker', 'wealth', 'weekly', 'weight', 'wholly', 'window', 'winner', 'winter', 'within', 'wonder', 'worker', 'wright', 'writer', 'yellow']
+        return random.choice(x)
+    print('you need to guess a 6 letter word or else this man will die\n\n')
+    def aliveMan(TEXT,a,b):
+        print('                     {}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}' .format(a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a))
+        print('                             {}              {}{}'   .format(b,b,b))
+        print('                             {}              {}{}'   .format(b,b,b))
+        print('                             {}              {}{}'   .format(b,b,b))
+        print('                         ooo {}              {}{}'   .format(b,b,b))
+        print(" {}  o   o{}              {}{}"   .format(TEXT,b,b,b))
+        print('                         ooo {}              {}{}'   .format(b,b,b))
+        print('                         {}o{}{}               {}{}'  .format(a,a,a,b,b))
+        print('                         /o\\                {}{}'   .format(b,b))
+        print('                        / o \\               {}{}'   .format(b,b))
+        print('                       /  o  \\              {}{}'   .format(b,b))
+        print('                          o                 {}{}'   .format(b,b))
+        print('                         / \\                {}{}'   .format(b,b))
+        print('                        /   \\               {}{}'   .format(b,b))
+        print('                       /     \\              {}{}'   .format(b,b))
+        print('                                            {}{}'   .format(b,b))
+        print('                                            {}{}'   .format(b,b))
+        print('\n')
+    aliveMan("YOU'LL SAVE ME RIGHT?",' ',' ')
+    print('you have 6 chances to guess the correct word \n')
+    word=words()
+    dub=word[:]
+    numbers=[]
+    n=[0,1,2,3,4,5]
+    for i in range(4):
+        x=random.choice(n)
+        n.remove(x)
+        numbers.append(x)
+    count=4
+    mm=[]
+    chance=6
+    for i in range(6):
+        if i not in numbers:
+            mm.append(word[i])
+        else:
+            mm.append('_')
+
+    while count>0:
+        sleep(1)
+        print(' '.join(list(map(str,mm))))
+        print('1 2 3 4 5 6')
+        print()
+        try:
+            z=int(input('enter the location between 1 to 6 to fill the slot:\n'))
+            if z not in list(range(1,7)):
+                x=0/0-1+32/4/0
+        except:
+            print()
+            print('"INVALID INPUT"!')
+            print()
+            continue
+        print()
+        if mm[z-1]=='_':
+            w=input('enter the letter to fill :  \n').lower()
+            if w==word[z-1]:
+                mm[z-1]=w
+                count-=1
+            else:
+                chance-=1
+                print()
+                print();print();print();print()
+                print('"WRONG WORD!"')
+                print()
+                print('Chances left! = {}'.format(chance))
+                print()
+        else:
+            print('THAT PLACE IS ALREADY FILLED ')
+            print()
+        if chance<=0:
+            print()
+            print('YOU LOST!, THE MAN IS DEAD!')
+            print()
+            aliveMan("YOU killed ME RIGHT? ",'_','|')
+            print()
+            print('The word was "{}"'.format(word))  
+            print()
+            break
+    if count<=0:
+        print('YOU WON!!!\n You guessed the correct word!!')
+        print()
+        print('Your word is {}'.format(''.join(list(map(str,mm)))))
+        print('The word was "{}"'.format(word)) 
+        print()
+        aliveMan("I KNEW YOU'D SAVE ME ",' ',' ')
+        print()
+
+
+#stone_paper_scissor
+def stonePaperScissor():
+    a='stone,paper,scissor'.split(',')
+    print('HOW MANY TIMES DO YOU WANT TO PLAY? \n')
+    com=0
+    player=0
+    
+    
+    def stone_paper():
+        print('                                                _______________________    ')
+        print('         OOOOOO                                /                      /    ')
+        print('      OOOOOOOOOOOO                            /     -      -         /     ')
+        print('    OOOOOOOOOOOOOOOO                         /       -          -   /      ')
+        print('  OOOOOOOOOOOOOOOOOOOO                      /               -      /       ')
+        print(' OOOOOOOOOOOOOOOOOOOOOO                    /    -                 /        ')
+        print(' OOOOOOOOOOOOOOOOOOOOOO                   /         -   -        /         ')
+        print('  OOOOOOOOOOOOOOOOOOOO                   /  -          -     -  /          ')
+        print('    OOOOOOOOOOOOOOOO                    /               -      /           ')
+        print('      OOOOOOOOOOOO                     /    -   -         -   /            ')
+        print('          OOOO                        /______________________/             ')
+        print('                                                                           ')
+    
+    def stone_stone():
+        print('                                      ')
+        print('         OOOOOO                     '*2)
+        print('      OOOOOOOOOOOO                  '*2)
+        print('    OOOOOOOOOOOOOOOO                '*2)
+        print('  OOOOOOOOOOOOOOOOOOOO              '*2)
+        print(' OOOOOOOOOOOOOOOOOOOOOO             '*2)
+        print(' OOOOOOOOOOOOOOOOOOOOOO             '*2)
+        print('  OOOOOOOOOOOOOOOOOOOO              '*2)
+        print('    OOOOOOOOOOOOOOOO                '*2)
+        print('      OOOOOOOOOOOO                  '*2)
+        print('          OOOO                      '*2)
+        print('                                      ')
+
+    def stone_scissor():
+        print('                                                                                      ')
+        print('         OOOOOO                                                                       ')
+        print('      OOOOOOOOOOOO                    \\\\\\\\                   OOO                  ')
+        print('    OOOOOOOOOOOOOOOO                     \\\\\\\\               O   O                 ')
+        print('  OOOOOOOOOOOOOOOOOOOO                      \\\\\\\\          // OOO                  ')
+        print(' OOOOOOOOOOOOOOOOOOOOOO                        \\\\\\\\     //                        ')
+        print(' OOOOOOOOOOOOOOOOOOOOOO                           \\\\\\\\////                        ')
+        print('  OOOOOOOOOOOOOOOOOOOO                            ////\\\\\\\\                        ')
+        print('    OOOOOOOOOOOOOOOO                           ////     \\\\                          ')
+        print('      OOOOOOOOOOOO                          ////          \\\\ OOO                    ')
+        print('          OOOO                           ////               O   O                     ')
+        print('                                      ////                   OOO                      ')
+        print('                                                                                      ')
+    
+    def paper_paper():
+        print('                _______________________       ________________________                 ')
+        print('               /                      /       \\                       \\              ')
+        print('              /     -      -         /         \\    -          -       \\             ')
+        print('             /       -          -   /           \\        -          -   \\            ')
+        print('            /               -      /             \\                       \\           ')
+        print('           /    -                 /               \\   -            -      \\          ')
+        print('          /         -   -        /                 \\      -                \\         ')
+        print('         /  -          -     -  /                   \\           -    -      \\        ')
+        print('        /               -      /                     \\    -         -        \\       ')
+        print('       /    -   -         -   /                       \\         -     -    -  \\      ')
+        print('      /______________________/                         \\_______________________\\     ')
+        print('                                                                                       ')
+        
+    def paper_stone():
+        print('                _______________________                                  ')
+        print('               /                      /              OOOOOO              ')
+        print('              /     -      -         /            OOOOOOOOOOOO           ')
+        print('             /       -          -   /           OOOOOOOOOOOOOOOO         ')
+        print('            /               -      /           OOOOOOOOOOOOOOOOOO        ')
+        print('           /    -                 /           OOOOOOOOOOOOOOOOOOOO       ')
+        print('          /         -   -        /           OOOOOOOOOOOOOOOOOOOOOO      ')
+        print('         /  -          -     -  /             OOOOOOOOOOOOOOOOOOOO       ')
+        print('        /               -      /               OOOOOOOOOOOOOOOOOO        ')
+        print('       /    -   -         -   /                 OOOOOOOOOOOOOOOO         ')
+        print('      /______________________/                    OOOOOOOOOOOO           ')
+        print('                                                     OOOOOO              ')
+    
+    def paper_scissor():
+        print('                _______________________                                                     ')
+        print('               /                      /     \\\\\\\\                   OOO                  ')
+        print('              /     -      -         /         \\\\\\\\               O   O                 ')
+        print('             /       -          -   /             \\\\\\\\           //OOO                  ')
+        print('            /               -      /                 \\\\\\\\      //                       ')
+        print('           /    -                 /                     \\\\\\\\////                        ')
+        print('          /         -   -        /                      ////\\\\\\\\                        ')
+        print('         /  -          -     -  /                   ////       \\\\\\                       ')
+        print('        /               -      /                 ////            \\\\\\OOO                  ')
+        print('       /    -   -         -   /               ////                O   O                     ')
+        print('      /______________________/             ////                    OOO                      ')
+        print('                                                                                            ')
+        
+    def scissor_paper():
+        print('                                                                                  ')
+        print('                                                  _______________________         ')
+        print('       OOO                 ////                  /                      /         ')
+        print('      O   O            ////                     /     -      -         /          ')
+        print('       OOO\\\\         //                        /       -          -   /         ')
+        print('           \\\\\\\\   ////                        /               -      /        ')
+        print('            \\\\\\\\//                           /    -                 /         ')
+        print('            ////\\\\                          /         -   -        /            ')
+        print('           ////   \\\\\\\\                     /  -          -     -  /           ')
+        print('       OOO//         \\\\                   /               -      /            ')
+        print('      O   O            \\\\\\\\              /    -   -         -   /             ')
+        print('       OOO                 \\\\\\\\         /______________________/              ')
+        print('                                                                                  ')
+        
+    def scissor_stone():
+        print('                                                                       ')
+        print('                                                                       ')
+        print('       OOO                 ////                   OOOOOOO              ')
+        print('      O   O            ////                    OOOOOOOOOOOOO           ')
+        print('       OOO \\\\      ///                        OOOOOOOOOOOOOOO        ')
+        print('            \\\\  ////                         OOOOOOOOOOOOOOOOO       ')
+        print('             \\\\//                           OOOOOOOOOOOOOOOOOOO      ')
+        print('             // \\\\                          OOOOOOOOOOOOOOOOOOO      ')
+        print('            //    \\\\\\\\                       OOOOOOOOOOOOOOOOO     ')
+        print('       OOO //        \\\\\\                       OOOOOOOOOOOOOOO      ')
+        print('      O   O            \\\\\\\\                     OOOOOOOOOOO        ')
+        print('       OOO                 \\\\\\\\                   OOOOOOO          ')
+        print('                                                                       ')
+    
+    def scissor_scissor():
+        print('                                                                                        ')
+        print('                                                                                        ')
+        print('       OOO                 ////        \\\\\\\\                    OOO                  ')
+        print('      O   O            ////               \\\\\\\\                O   O                 ')
+        print('       OOO\\\\         //                      \\\\\\\\            //OOO                ')
+        print('           \\\\\\\\   ////                          \\\\\\\\       //                   ')
+        print('            \\\\\\\\//                                 \\\\\\\\////                     ')
+        print('            ////\\\\                                 ////\\\\\\\\                       ')
+        print('           ////   \\\\\\\\                          ////       \\\\                     ')
+        print('       OOO//         \\\\\\                      ////            \\\\OOO                ')
+        print('      O   O            \\\\\\\\                ////               O   O                 ')
+        print('       OOO                 \\\\\\\\         ////                   OOO                  ')
+        print('                                                                                        ')
+    
+    
+    def wordss(a):
+        dd=['ON YOUR FACE','HAHAHA LOL','OHH YEAH LOL','HUH.. AS IF','NOOB','BETTER LUCK NEXT TIME']
+        cc=['Noice','Cool','Good','Great','well played','Wow']
+        if a==1:
+            return random.choice(cc)
+        elif a==2:
+            return random.choice(dd)
+        else:
+            return '"DRAW"\nCOM: YOU CANNOT DEFEAT ME!'
+    try:
+        count=int(input())
+        if count<=0:
+            asdf=0/0/3/3/0
+    except:
+        print()
+        print('Please enter vaid input!')
+        print()
+        stonePaperScissor()
+    while count>0:
+        print('Enter "stone" or "paper" or "scissor" \n')
+        b=input().lower()
+        c=random.choice(a)
+        print()
+        for i in range(3):
+            print(a[i],end='\r')
+            sleep(1)
+        print('               ')
+        sleep(1)
+        print()
+        if b=='paper' and c=='stone':
+            player+=1
+            print('\n'*5)
+            paper_stone()
+            print(wordss(1))
+            print()
+        elif b=='paper' and c=='scissor':
+            com+=1
+            print('\n'*5)
+            paper_scissor()
+            print('COM:',wordss(2))
+            print()
+            pass
+        elif b=='paper' and c=='paper':
+            print('\n'*5)
+            paper_paper()
+            print(wordss(3))
+            print()
+            pass
+        elif b=='stone' and c=='stone':
+            print('\n'*5)
+            stone_stone()
+            print(wordss(3))
+            print()
+            pass
+        elif b=='stone' and c=='scissor':
+            player+=1
+            print('\n'*5)
+            stone_scissor()
+            print(wordss(1))
+            print()
+            pass
+        elif b=='stone' and c=='paper':
+            com+=1
+            print('\n'*5)
+            stone_paper()
+            print('COM:',wordss(2))
+            print()
+            pass
+        elif b=='scissor' and c=='stone':
+            com+=1
+            print('\n'*5)
+            scissor_stone()
+            print('COM:',wordss(2))
+            print()
+            pass
+        elif b=='scissor' and c=='scissor':
+            print('\n'*5)
+            scissor_scissor()
+            print(wordss(3))
+            print()
+            pass
+        elif b=='scissor' and c=='paper':
+            player+=1
+            print('\n'*5)
+            scissor_paper()
+            print(wordss(1))
+            print()
+            pass
+        else:
+            print('Invalid Input')
+            print()
+            print('TRY AGAIN')
+            print()
+            continue
+        count-=1
+    print('Final Scores!!')
+    print()
+    x=8
+    for i in range(1,10):
+        sleep(1)
+        print('LOADING ['+'='*i+'>'+' '*x+']',end='\r')
+        x-=1
+    sleep(1)
+    print()
+    print('Your Score : {}\nopponent score : {}'.format(player,com))
+    if com>player:
+        print()
+        print('YOU LOOSE!')
+        pass
+    elif com<player:
+        print()
+        print('YOU WIN!!')
+        pass
+    else:
+        print()
+        print('DRAW MATCH')
+        print()
+
+
+#just starting the game
+count1=0
+print('HELLO THERE!')
+print('WE HAVE FEW GAMES, WOULD YOU LIKE TO PLAY?')
+def start(count1):
+    
+    try:
+        zz=input('Type 1 to continue.\n')
+        print()
+
+        if zz=='1':
+            def yeah():
+                print('LIST OF GAMES:                        ')
+                print('ENTER 1 FOR MADLIB GAME!              ')
+                print('ENTER 2 FOR GUESSING GAME!            ')
+                print('ENTER 3 FOR ROLL A DIE GAME!          ')
+                print('ENTER 4 FOR HANGMAN GAME!             ')
+                print('ENTER 5 FOR STONE_PAPER_SCISSOR GAME! ')
+                try:
+                    aa=int(input())
+                except:
+                    print()
+                    print('Invalid Input!')
+                    print()
+                    yeah()
+                if aa==1:
+                    print()
+                    print('In this game you need to enter some words and the computer will scramble and give you meaningless sentence. ')
+                    print()
+                    madLib()
+                elif aa==2:
+                    guessing()
+                elif aa==3:
+                    roll_a_die()
+                elif aa==4:
+                    hangman()
+                elif aa==5:
+                    stonePaperScissor()
+                elif a==0:
+                    return
+                else:
+                    print()
+                    print('"INVALID INPUT!"')
+                    print()
+                    yeah()
+            yeah()
+        else:
+            if count1==0:
+                print('SORRY!, BUT YOU HAVE TO PRESS "1", THERE IS NO OTHER WAY!')
+                print('Lets try that again ok :)')
+                print()
+                sleep(2)
+            elif count1==1:
+                print("Don't you understand english?\nI said press 1 to start!!")
+                print()
+                sleep(2)
+            elif count1==2:
+                print('WHAT IS YOUR PROBLEM??, CAN\'T YOU JUST PRESS "1"?')
+                print()
+                sleep(2)
+            elif count1>=3:
+                print('GET LOST!!, IAM NOT GOING TO START UNTILL AND UNLESS YOU PRESS "1" ')
+                print()
+                sleep(2)
+            start(count1+1)
+        print()
+    except:
+        print()
+        print('Invalid Input')
+        print()
+        start(count1)
+
+start(count1)
+
+  
