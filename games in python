@@ -361,6 +361,11 @@ def stonePaperScissor():
         b=input().lower()
         c=random.choice(a)
         print()
+        if b not in a:
+            print()
+            print('Invalid Input!\nTry Again!')
+            print()
+            continue
         for i in range(3):
             print(a[i],end='\r')
             sleep(1)
@@ -426,12 +431,12 @@ def stonePaperScissor():
             print(wordss(1))
             print()
             pass
-        else:
+        '''else:
             print('Invalid Input')
             print()
             print('TRY AGAIN')
             print()
-            continue
+            continue'''
         count-=1
     print('Final Scores!!')
     print()
