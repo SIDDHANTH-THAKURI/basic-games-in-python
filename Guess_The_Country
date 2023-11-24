@@ -1,0 +1,60 @@
+import tkinter as tk
+from tkinter import ttk
+import random
+
+# List of countries
+countries = [
+    "United States", "China", "India", "Brazil", "Russia",
+    "Japan", "Germany", "United Kingdom", "France", "Italy",
+    "Canada", "Australia", "Spain", "Mexico", "South Korea",
+    "Indonesia", "Turkey", "Netherlands", "Saudi Arabia", "Switzerland",
+    "Argentina", "Sweden", "Nigeria", "Poland", "Belgium",
+    "Thailand", "Austria", "Norway", "Iran", "United Arab Emirates",
+    "South Africa", "Denmark", "Malaysia", "Singapore", "Israel",
+    "Hong Kong", "Ireland", "Finland", "Portugal", "Greece",
+    "Philippines", "Czech Republic", "Romania", "Pakistan", "Vietnam",
+    "Bangladesh", "Egypt", "Hungary", "New Zealand", "Morocco",
+    "Kenya", "Ethiopia", "Colombia", "Ukraine", "Iraq",
+    "Peru", "Chile", "Norway", "Kazakhstan", "Algeria",
+    "Qatar", "Luxembourg", "Croatia", "Slovakia", "Bulgaria",
+    "Tunisia", "Nepal", "Cuba", "Ghana", "Jordan",
+    "Lebanon", "Serbia", "Lithuania", "Uruguay", "Costa Rica"
+]
+
+
+# Function to check the guess
+def guessTheCountry():
+    guess = guess_entry.get().title()
+    if guess == word:
+        result_label.config(text="You Win!!\n" + word + " is the right answer!")
+        guess_button.config(state=tk.DISABLED)
+    elif guess in countries:
+        distance = 100 - abs(countries.index(word) - countries.index(guess))
+        hint = "higher" if countries.index(guess) < countries.index(word) else "lower"
+        result_label.config(text=f"You are {distance}% close. Try a country alphabetically {hint}.")
+    else:
+        result_label.config(text="That's not a valid country name. Try again!")
+    guess_entry.delete(0, tk.END)
+
+# Initialize main window
+root = tk.Tk()
+root.title("Country Guessing Game")
+
+# Initialize variables
+countries.sort()
+word = random.choice(countries)
+
+# Create widgets
+instruction_label = ttk.Label(root, text="Guess the Country!", font=('Arial', 16))
+guess_entry = ttk.Entry(root, font=('Arial', 14), width=30)
+guess_button = ttk.Button(root, text="Guess", command=guessTheCountry)
+result_label = ttk.Label(root, font=('Arial', 14), wraplength=300)
+
+# Layout widgets
+instruction_label.pack(pady=10)
+guess_entry.pack(pady=5)
+guess_button.pack(pady=5)
+result_label.pack(pady=10)
+
+# Start the GUI event loop
+root.mainloop()
