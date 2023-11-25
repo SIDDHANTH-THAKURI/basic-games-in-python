@@ -1,0 +1,88 @@
+import tkinter as tk
+
+def start_timer():
+    global running, total_seconds
+    if not running:
+        total_seconds = int(hours_var.get()) * 3600 + int(minutes_var.get()) * 60 + int(seconds_var.get())
+        update_display()
+        running = True
+        root.after(1000, update_timer)
+
+def stop_timer():
+    global running
+    running = False
+
+def reset_timer():
+    global total_seconds
+    total_seconds = 0
+    update_display()
+
+def update_timer():
+    global total_seconds
+    if running and total_seconds > 0:
+        total_seconds -= 1
+        update_display()
+        root.after(1000, update_timer)
+    else:
+        stop_timer()
+
+def update_display():
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    time_label.config(text=f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+
+root = tk.Tk()
+root.title("Timer")
+
+# Initialize total seconds
+total_seconds = 0
+
+# Flags
+running = False
+
+# Variables for time entry
+hours_var = tk.StringVar(value='0')
+minutes_var = tk.StringVar(value='0')
+seconds_var = tk.StringVar(value='0')
+
+# Positioning the window in the center of the screen
+window_width = 300
+window_height = 200
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+center_x = int(screen_width/2 - window_width / 2)
+center_y = int(screen_height/2 - window_height / 2)
+root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
+# Time entry frame
+entry_frame = tk.Frame(root)
+entry_frame.pack(pady=10)
+
+# Time entry fields
+hours_entry = tk.Entry(entry_frame, textvariable=hours_var, width=5)
+minutes_entry = tk.Entry(entry_frame, textvariable=minutes_var, width=5)
+seconds_entry = tk.Entry(entry_frame, textvariable=seconds_var, width=5)
+
+hours_entry.pack(side='left', padx=5)
+minutes_entry.pack(side='left', padx=5)
+seconds_entry.pack(side='left', padx=5)
+
+# Timer display
+time_label = tk.Label(root, text="00:00:00", font=('Helvetica', 24))
+time_label.pack(pady=10)
+
+# Control buttons
+button_frame = tk.Frame(root)
+button_frame.pack(pady=10)
+
+start_button = tk.Button(button_frame, text="Start", command=start_timer)
+stop_button = tk.Button(button_frame, text="Stop", command=stop_timer)
+reset_button = tk.Button(button_frame, text="Reset", command=reset_timer)
+
+start_button.pack(side='left', padx=5)
+stop_button.pack(side='left', padx=5)
+reset_button.pack(side='left', padx=5)
+
+# Start the GUI
+root.mainloop()
