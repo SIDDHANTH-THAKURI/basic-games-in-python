@@ -1,0 +1,68 @@
+#pip install colorama
+#dont forget to install this
+
+import random
+import time
+from colorama import Fore, Style, init
+
+# Initialize colorama
+init()
+
+# List of sounds and their categories
+SOUNDS = {
+    "Quack!": "Duck",
+    "Meow!": "Cat",
+    "Woof!": "Dog",
+    "Vroom!": "Car",
+    "Bang!": "Gun",
+    "Boom!": "Explosion",
+    "Moo!": "Cow",
+    "Baa!": "Sheep",
+    "Neigh!": "Horse",
+    "Ding Dong!": "Doorbell",
+}
+
+COLORS = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
+
+# Game variables
+score = 0
+rounds = 5
+time_limit = 5  # Seconds to guess each sound
+
+def play_game():
+    """Main game loop."""
+    global score
+    print("Welcome to 'Guess the Sound'!")
+    print(f"You have {rounds} rounds to guess sounds. Type your answer quickly!\n")
+
+    for round_num in range(1, rounds + 1):
+        print(f"Round {round_num} of {rounds}!")
+
+        # Choose a random sound
+        sound, correct_answer = random.choice(list(SOUNDS.items()))
+
+        # Display the sound in a random color
+        random_color = random.choice(COLORS)
+        print(random_color + f"\nSound: {sound}\n" + Style.RESET_ALL)
+
+        # Start the timer and get user input
+        start_time = time.time()
+        guess = input("What's making this sound? ").strip()
+        elapsed_time = time.time() - start_time
+
+        # Check if guess is correct and within the time limit
+        if elapsed_time > time_limit:
+            print(Fore.RED + "Too slow! Time's up.\n" + Style.RESET_ALL)
+        elif guess.lower() == correct_answer.lower():
+            print(Fore.GREEN + "Correct!\n" + Style.RESET_ALL)
+            score += 1
+        else:
+            print(Fore.RED + f"Wrong! It was {correct_answer}.\n" + Style.RESET_ALL)
+
+        time.sleep(1)  # Small pause before next round
+
+    # End of game
+    print(f"Game over! Your final score is: {score}/{rounds}")
+
+if __name__ == "__main__":
+    play_game()
