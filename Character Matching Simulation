@@ -1,0 +1,34 @@
+# pip install colorama
+#dont forget to import above library!
+
+import random
+import time
+from colorama import Fore, Style, init
+
+# Initialize colorama
+init()
+
+# List of random colors for incorrect matches
+random_colors = [Fore.RED, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
+
+a = "abcdefghijklmnopqrstuvwxyz!@#$%^&*(){}_+-=[]|\:;\"',<.>/?\\|~` 1234567890"
+x = set(a)
+b = input("Enter a word!\n")
+count = 0
+
+while count < len(b):
+    if b[count].lower() not in x:
+        print("Invalid Input! One or more invalid character found!\nEnter only alphabets or symbols or numbers!")
+    c = random.choice(a)
+    if c == b[count].lower():
+        print(Fore.GREEN + b[count], end="", flush=True)  # Correct character in green
+        time.sleep(0.01)
+        count += 1
+    else:
+        random_color = random.choice(random_colors)  # Choose a random color
+        print(random_color + c, end="", flush=True)  # Incorrect character in random color
+        time.sleep(0.01)
+        print('\b \b', end="", flush=True)  # Erase the character and move back
+
+# Reset to default terminal color
+print(Style.RESET_ALL)
