@@ -1,0 +1,79 @@
+#pip install windows-curses
+#don't forget to install the above library
+
+import curses
+import random
+
+def main(stdscr):
+    # Initialize the screen
+    curses.curs_set(0)  # Hide the cursor
+    sh, sw = stdscr.getmaxyx()  # Get screen height and width
+    w = curses.newwin(sh, sw, 0, 0)  # Create a new window
+    w.keypad(True)
+    w.timeout(100)  # Refresh rate in milliseconds
+
+    # Initial snake and food coordinates
+    snk_x = sw // 4
+    snk_y = sh // 2
+    snake = [
+        [snk_y, snk_x + 1],
+        [snk_y, snk_x],
+        [snk_y, snk_x - 1],
+    ]
+    food = [random.randint(1, sh - 2), random.randint(1, sw - 2)]
+    w.addch(food[0], food[1], curses.ACS_DIAMOND)
+
+    # Initial direction
+    key = curses.KEY_RIGHT
+
+    while True:
+        next_key = w.getch()
+        key = key if next_key == -1 else next_key
+
+        # Calculate new head position based on the key pressed
+        head = [snake[0][0], snake[0][1]]
+        if key == curses.KEY_DOWN and key != curses.KEY_UP:
+            head[0] += 1
+        elif key == curses.KEY_UP and key != curses.KEY_DOWN:
+            head[0] -= 1
+        elif key == curses.KEY_LEFT and key != curses.KEY_RIGHT:
+            head[1] -= 1
+        elif key == curses.KEY_RIGHT and key != curses.KEY_LEFT:
+            head[1] += 1
+        else:
+            continue  # Ignore invalid keys
+
+        # Insert new head to the snake
+        snake.insert(0, head)
+
+        # Check for collision with walls or self
+        if (head[0] in [0, sh] or
+            head[1] in [0, sw] or
+            head in snake[1:]):
+            curses.endwin()
+            print("Game Over!")
+            print(f"Your score: {len(snake) - 3}")
+            break
+
+        # Check if snake has found the food
+        if head == food:
+            # Place new food
+            while True:
+                new_food = [
+                    random.randint(1, sh - 2),
+                    random.randint(1, sw - 2)
+                ]
+                if new_food not in snake:
+                    food = new_food
+                    break
+            w.addch(food[0], food[1], curses.ACS_DIAMOND)
+        else:
+            # Remove the tail segment
+            tail = snake.pop()
+            w.addch(tail[0], tail[1], ' ')
+
+        # Draw the new head
+        w.addch(head[0], head[1], curses.ACS_CKBOARD)
+
+if __name__ == "__main__":
+    curses.wrapper(main)
